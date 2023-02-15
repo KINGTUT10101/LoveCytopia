@@ -11,7 +11,7 @@
 
 Cytopia is a free, open source retro pixel-art city building game with a big focus on mods. Love, Cytopia is a port of the original game developed for the LOVE2D framework and written in Lua.
 
-If you have questions or if you want to join the project, visit the [Project's Discord Server](https://discord.gg/qwa2H3G).
+If you have questions or if you want to join the project, visit the [project's Discord server](https://discord.gg/MG3tgYV6ce).
 
 #### Supported Platforms
 
