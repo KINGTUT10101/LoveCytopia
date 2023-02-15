@@ -2,7 +2,6 @@
 
 [![Discord](https://img.shields.io/discord/448344322887254018.svg?logo=discord)](https://discord.gg/qwa2H3G)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cytopia&metric=alert_status)](https://sonarcloud.io/dashboard?id=cytopia)
 <b>Website/Forums</b> - Cytopia.net - <https://www.cytopia.net/><br>
 <b>YouTube</b> - Cytopia - <https://www.youtube.com/channel/UCJIzKBD3wl6KRohiX6i53GA><br>
 <b>Twitter</b> - @CytopiaGame - <https://twitter.com/CytopiaGame><br>
