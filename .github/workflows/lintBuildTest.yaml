@@ -1,0 +1,14 @@
+name: Lint, Build, Test
+on: [push, pull_request]
+jobs:
+  sile:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Luacheck linter
+        uses: lunarmodules/luacheck@v1
+
+      - name: Build bare love package
+        uses: love-action/love-actions-test@v1
