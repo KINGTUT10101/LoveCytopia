@@ -2,7 +2,7 @@ name: Lint, Build, Test
 on: [push, pull_request]
 jobs:
   Build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
