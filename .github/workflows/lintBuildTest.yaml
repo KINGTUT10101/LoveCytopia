@@ -1,15 +1,6 @@
 name: Lint, Build, Test
 on: [push, pull_request]
 jobs:
-  Build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Build bare love package
-        uses: love-actions/love-actions-test@v1
-
   Lint:
     runs-on: ubuntu-latest
     steps:
@@ -18,3 +9,12 @@ jobs:
 
       - name: Luacheck linter
         uses: lunarmodules/luacheck@v1
+  
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build bare love package
+        uses: love-actions/love-actions-test@v1
