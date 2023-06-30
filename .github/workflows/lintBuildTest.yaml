@@ -10,7 +10,7 @@ jobs:
   #     - name: Luacheck linter
   #       uses: lunarmodules/luacheck@v1
   
-  Test:
+  Build and Test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
