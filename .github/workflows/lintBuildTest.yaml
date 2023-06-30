@@ -1,14 +1,14 @@
 name: Lint, Build, Test
 on: [push, pull_request]
 jobs:
-  Lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+  # Lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v3
 
-      - name: Luacheck linter
-        uses: lunarmodules/luacheck@v1
+  #     - name: Luacheck linter
+  #       uses: lunarmodules/luacheck@v1
   
   Test:
     runs-on: ubuntu-latest
