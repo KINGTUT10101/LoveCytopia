@@ -1,33 +1,21 @@
-=====Project Lead / Lead Developer=====
-JimmySnails (Engine, UI, ...)
-Ercadio (Engine, Unittests)
-Cad'ika Orade (Procedural Terrain Generation) 
+=====Development=====
+Kingtut 101
 
-=====Developers=====
-adct23 (Engine, Audiosystem)
-AnotherFoxGuy (BuildSystem, WebSite, Community Manager)
-Kollix (TileData Editor)
-lizzyd710 (UI, Translator)
-Notakas (Engine, Gameplay)
-Paragoumba (Engine, Gameplay, Translator)
-utilForever (Code Reviews, Consulting)
-Westrox (Engine, Gameplay)
-Yukyduky (Engine, Gameplay)
-
-=====Graphics Artists=====
-Kingtut 101 (Lead Artist, Community Manager)
+=====Graphics=====
+Kingtut 101
 Pineapples Trix
-RockFort (Translator)
+RockFort
 Folesnaid
-MaroonShaded (Translator)
+MaroonShaded
 Yusuf8a684
 JustKekman
 THEMAX
 BangBoom
-Panzerkampfwagen 2 ausf (Junior Graphics Artist)
+Panzerkampfwagen 2 ausf
 
-=====Audio Director=====
-MB22 (OST, Sound Effects, Ambient Noise)
+=====Audio=====
+MB22
+sqwdmusic
 
-=====Sound Design=====
-sqwdmusic (OST)
+=====Original Idea=====
+SimplyLiz
