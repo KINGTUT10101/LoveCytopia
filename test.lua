@@ -1,3 +1,0 @@
-print ("Inputs:", ...)
-
-return "Outputs:", ...

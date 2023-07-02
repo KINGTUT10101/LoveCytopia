@@ -10,7 +10,7 @@ love.graphics.setLineStyle ("smooth")
 -- TODO: Loads in the defs from data/resources/data/TileData.json
 
 -- TEMP: Loads in some test defs for a few tile objects
-local imageData = love.image.newImageData ("data/resources/images/decoration/ground/GD_NA_sandstone_black.png")
+local imageData = love.image.newImageData ("assets/graphics/decoration/ground/GD_NA_sandstone_black.png")
 Tiledefs[1] = {
     width = 1,
     height = 1,

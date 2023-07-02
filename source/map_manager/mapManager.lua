@@ -1,12 +1,6 @@
-local Tiledefs = require ("source.classes.tiledefs")
-local tileClasses = require ("source.classes.tileClasses")
-
-local Map = {
-    grid = {},
-    size = 32,
-    height = 16,
+local mapManager = {
+    grid = nil, -- A reference to a map
 }
-local grid = Map.grid
 
 
 -- Wipes the map and replaces it with a new one of the specified size
@@ -73,8 +67,8 @@ function Map.draw ()
                 love.graphics.setColor (1, 1, 1, 1)
             end
             
-            local screen_x = (i - j) * 16
-            local screen_y = (i + j) * 8 - secondPart.z * 8
+            local screen_x = (i - j) * 16 -- (i - j) * (tileW / 2)
+            local screen_y = (i + j) * 8 - secondPart.z * 8 -- (i + j) * (tileH / 2) - map[i][j] * heightMult
             love.graphics.draw (layerPart.frameRef.image, screen_x, screen_y)
         end
     end
@@ -84,9 +78,12 @@ end
 -- Translates mouse coordinates into map coordinates while considering the tile's z-level
 -- Returns -1, -1 if the mouse is outside the map
 function Map.toMapCoords(mouseX, mouseY)
+    local belowOffset = math.ceil (Map.height / (16 / 8))
+    local aboveOffset = math.floor (minHeight / (tileH / heightMult))
+    
     -- Original flat map coords
-    local origX = math.floor (((mouseX-16)/32)+(mouseY/16))
-	local origY = math.floor (((mouseY/16)-(mouseX-16)/32))
+    local origX = math.floor (mouseY / 16 + (mouseX - 16) / 32) -- math.floor (mouseY / tileH + (mouseX - tileH) / tileW)
+	local origY = math.floor (mouseY / 16 - (mouseX - 16) / 32) -- math.floor (mouseY / tileH - (mouseX - tileH) / tileW)
 
     -- TODO: check if original coords are below the map and skip the calculation if true
 
@@ -107,8 +104,8 @@ function Map.toMapCoords(mouseX, mouseY)
             -- Checks if the mouse would hit the bounding box of the next tile
             -- It does this by adjusting the mouse's y-position as if it were in a flat map instead
             local tempHeight = mouseY + grid[nextX][nextY].z * 8
-            local tempX = math.floor (((mouseX-16)/32)+(tempHeight/16))
-            local tempY = math.floor ((-(mouseX-16)/32)+(tempHeight /16))
+            local tempX = math.floor (((mouseX-16)/32)+(tempHeight/16)) -- math.floor (mouseY / tileH + (mouseX - tileH) / tileW)
+            local tempY = math.floor ((-(mouseX-16)/32)+(tempHeight /16)) -- math.floor (mouseY / tileH - (mouseX - tileH) / tileW)
 
             if tempX == nextX and tempY == nextY then
                 hit = true

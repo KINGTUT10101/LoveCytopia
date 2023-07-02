@@ -1,0 +1,3 @@
+local filepath, map = ...
+map.act = {}
+
