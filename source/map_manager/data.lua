@@ -30,7 +30,7 @@ function map.data.reset (props)
         local firstpart = grid[i]
 
         for j = 1, map.data.props.length do
-            firstpart[j] = {z = 1}
+            firstpart[j] = {z = map.data.props.minHeight}
             local secondPart = firstpart[j]
         end
     end

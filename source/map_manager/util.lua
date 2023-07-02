@@ -29,7 +29,7 @@ function map.util.toMapCoords (mouseX, mouseY)
         
         -- Ensures that we don't reference the map table when the current position is out of bounds
         if (nextX >= 1 and nextX <= map.data.props.width) and (nextY >= 1 and nextY <= map.data.props.length) then
-            tempY = mouseY + map[nextX][nextY] * 8
+            tempY = mouseY + map.data.grid[nextX][nextY].z * 8
         end
 
         -- Translates the mouse position (with the offset mouseY value) into a 2D map position
@@ -60,8 +60,8 @@ end
 -- @param mouseX (number) The x position of the mouse
 -- @param mouseY (number) The y position of the mouse
 -- @return A pair of map coordinates, even if they're invalid
-function map.util.toFlatCoords (mouseX, mouseY)
-    local mapX = math.floor (mouseX / 16 + (mouseX - 16) / 32) -- math.floor (mouseY / tileH + (mouseX - tileH) / tileW)
+function map.util.toFlatCoords (mouseX, mouseY)    
+    local mapX = math.floor (mouseY / 16 + (mouseX - 16) / 32) -- math.floor (mouseY / tileH + (mouseX - tileH) / tileW)
 	local mapY = math.floor (mouseY / 16 - (mouseX - 16) / 32) -- math.floor (mouseY / tileH - (mouseX - tileH) / tileW)
 
     return mapX, mapY

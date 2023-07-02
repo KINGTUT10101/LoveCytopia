@@ -1,8 +1,11 @@
 local filepath, map = ...
+local camera = require ("source.camera")
 map.draw = {}
 
 -- TEMP
-local imageData = love.image.newImageData ("assets/graphics/decoration/ground/GD_NA_sandstone_black.png")
+love.graphics.setDefaultFilter ("nearest", "nearest")
+love.graphics.setLineStyle ("smooth")
+local imageData = love.image.newImageData ("tileImage.png")
 local image = love.graphics.newImage (imageData)
 
 
@@ -10,16 +13,20 @@ local image = love.graphics.newImage (imageData)
 function map.draw.render ()
     local grid = map.data.grid
     
-    for i = 1, map.data.props.width do
-        local firstPart = grid[i]
+    love.graphics.push ()
+        love.graphics.translate (camera.x, camera.y)
+        love.graphics.scale (camera.zoom, camera.zoom)
+        for i = 1, map.data.props.width do
+            local firstPart = grid[i]
 
-        for j = 1, map.data.props.length do
-            local secondPart = firstPart[j]
+            for j = 1, map.data.props.length do
+                local secondPart = firstPart[j]
 
-            local screenX = (i - j) * 16 -- (i + j) * (tileH / 2)
-            local screenY = (i + j) * 8 - secondPart.z * 8 -- (i - j) * (tileW / 2)
+                local screenX = (i - j) * 16 -- (i + j) * (tileH / 2)
+                local screenY = (i + j) * 8 - secondPart.z * 8 -- (i - j) * (tileW / 2)
 
-            love.graphics.draw (image, screenX, screenY)
+                love.graphics.draw (image, screenX, screenY)
+            end
         end
-    end
+    love.graphics.pop ()
 end
