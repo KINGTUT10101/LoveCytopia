@@ -14,6 +14,7 @@ local gameInfo = {
 
 local mouseX, mouseY
 local mouseXt, mouseYt
+local mapX, mapY
 
 
 -- Defines the functions
@@ -22,6 +23,7 @@ local mouseXt, mouseYt
 
 function love.load ()
     print ("Love, Cytopia v" .. gameInfo.version)
+    print ("Using LOVE2D v" .. love.getVersion ())
     
     -- Sets the image filter and line style so the graphics aren't blurry
     love.graphics.setDefaultFilter ("nearest", "nearest")
@@ -37,8 +39,8 @@ end
 
 function love.update (dt)
     mouseX, mouseY = love.mouse.getPosition ()
-    
     mouseXt, mouseYt = camera.update (dt, mouseX, mouseY)
+    mapX, mapY = map.util.toMapCoords (mouseXt, mouseYt)
 end
 
 
@@ -65,7 +67,7 @@ function love.draw()
     love.graphics.print ("Transl: " .. math.floor (mouseXt) .. ", " .. math.floor (mouseYt), 10, 40)
 
     -- Shows the camera info
-    love.graphics.print ("Cam: " .. camera.x .. ", " .. camera.y, 10, 60)
+    love.graphics.print ("Cam: " .. math.floor (camera.x) .. ", " .. math.floor (camera.y), 10, 60)
     love.graphics.print ("Zoom: " .. math.floor (camera.zoom * 100) / 100 .. "x", 10, 80)
 end
 
@@ -78,5 +80,9 @@ end
 
 
 function love.mousepressed(x, y, button, istouch, presses)
-    
+    if button == 1 then
+        map.act.raise (mapX, mapY, 1)
+    elseif button == 2 then
+        map.act.raise (mapX, mapY, -1)
+    end
 end
