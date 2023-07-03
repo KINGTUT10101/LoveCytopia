@@ -1,6 +1,8 @@
 local filepath, map = ...
 map.util = {}
 
+local TILE_W, TILE_H, TILE_F = map.draw.TILE_W, map.draw.TILE_H, map.draw.TILE_F
+
 
 --- Translates mouse coordinates into map coordinates.
 -- @param mouseX (number) The x position of the mouse
@@ -19,8 +21,7 @@ function map.util.toMapCoords (mouseX, mouseY)
     -- The last possible tile the algorithm should check
     local targetX, targetY = origX + aboveOffset, origY + aboveOffset
     -- Used in the algorithm to determine the next values of nextX and nextY
-    -- ((mouseX % tileW) > (tileW / 2)) ~= (nextX % 2 == 1) ~= (nextY % 2 == 1)
-    local moveEast = ((mouseX % 32) > 16) ~= (nextX % 2 == 1) ~= (nextY % 2 == 1)
+    local moveEast = ((mouseX % TILE_W) > (TILE_W / 2)) ~= (nextX % 2 == 1) ~= (nextY % 2 == 1)
 
     -- Loops until the correct tile is "hit" or until it surpasses the target tile
     while nextX >= targetX and nextY >= targetY do
@@ -29,7 +30,7 @@ function map.util.toMapCoords (mouseX, mouseY)
         
         -- Ensures that we don't reference the map table when the current position is out of bounds
         if (nextX >= 1 and nextX <= map.data.props.width) and (nextY >= 1 and nextY <= map.data.props.length) then
-            tempY = mouseY + map.data.grid[nextX][nextY].z * 8
+            tempY = mouseY + map.data.grid[nextX][nextY].z * TILE_F
         end
 
         -- Translates the mouse position (with the offset mouseY value) into a 2D map position
@@ -61,8 +62,10 @@ end
 -- @param mouseY (number) The y position of the mouse
 -- @return A pair of map coordinates, even if they're invalid
 function map.util.toFlatCoords (mouseX, mouseY)    
-    local mapX = math.floor (mouseY / 16 + (mouseX - 16) / 32) -- math.floor (mouseY / tileH + (mouseX - tileH) / tileW)
-	local mapY = math.floor (mouseY / 16 - (mouseX - 16) / 32) -- math.floor (mouseY / tileH - (mouseX - tileH) / tileW)
+    -- @fixme I think this function is off by half a pixel on both axes, but it's probably not worth fixing
+    
+    local mapX = math.floor (mouseY / TILE_H + (mouseX - TILE_H) / TILE_W)
+	local mapY = math.floor (mouseY / TILE_H - (mouseX - TILE_H) / TILE_W)
 
     return mapX, mapY
 end

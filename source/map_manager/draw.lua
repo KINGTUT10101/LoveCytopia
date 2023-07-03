@@ -1,6 +1,12 @@
 local filepath, map = ...
 local camera = require ("source.camera")
-map.draw = {}
+map.draw = {
+    TILE_W = 32, -- Pixel width of a 1x1 tile
+    TILE_H = 16, -- Pixel height of a 1x1 tile
+    TILE_F = 8, -- Height factor, aka the height of a tile raised by one level
+}
+
+local TILE_W, TILE_H, TILE_F = map.draw.TILE_W, map.draw.TILE_H, map.draw.TILE_F
 
 -- TEMP
 love.graphics.setDefaultFilter ("nearest", "nearest")
@@ -22,8 +28,9 @@ function map.draw.render ()
             for j = 1, map.data.props.length do
                 local secondPart = firstPart[j]
 
-                local screenX = (i - j) * 16 -- (i + j) * (tileH / 2)
-                local screenY = (i + j) * 8 - secondPart.z * 8 -- (i - j) * (tileW / 2)
+                -- Calculates the screen position of the tile
+                local screenX = (i - j) * (TILE_W / 2)
+                local screenY = (i + j) * (TILE_H / 2) - secondPart.z * TILE_F
 
                 love.graphics.draw (image, screenX, screenY)
             end
