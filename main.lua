@@ -1,6 +1,7 @@
--- -- Loads the libraries
+-- Loads the libraries
 require ("source.libraries.requireExt")
 local map = require ("source.map_manager")
+local content = require ("source.content_manager")
 local camera = require ("source.camera")
 
 -- Declares / initializes the global variables

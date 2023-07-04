@@ -1,6 +1,8 @@
 local filepath = ...
 
-local map = {} -- Contains all the modules related to the map manager
+-- Contains all the modules related to the map manager
+-- It is responsible for managing the state of the in-game map
+local map = {}
 
 -- Loads the other modules
 require (filepath .. ".data", map) -- Stores and manages raw map data and map settings
