@@ -1,7 +1,7 @@
 local filepath, map = ...
 map.data = {
-    grid = {}, -- Holds the map tiles
-    props = {}, -- Holds any map-specific properties
+    _grid = {}, -- Holds the map tiles
+    _props = {}, -- Holds any map-specific properties
 }
 
 
@@ -11,7 +11,7 @@ function map.data.reset (props)
     props = props or {}
     
     -- Set default property values
-    map.data.props = {
+    map.data._props = {
         maxHeight = 16,
         minHeight = 1,
         width = 32,
@@ -20,19 +20,19 @@ function map.data.reset (props)
     
     -- Set new property values
     for k, v in pairs (props) do
-        map.data.props[k] = v
+        map.data._props[k] = v
     end
 
     -- Reset map tiles
     local grid = {}
-    for i = 1, map.data.props.width do
+    for i = 1, map.data._props.width do
         grid[i] = {}
         local firstpart = grid[i]
 
-        for j = 1, map.data.props.length do
-            firstpart[j] = {z = map.data.props.minHeight}
+        for j = 1, map.data._props.length do
+            firstpart[j] = {z = map.data._props.minHeight}
             local secondPart = firstpart[j]
         end
     end
-    map.data.grid = grid
+    map.data._grid = grid
 end

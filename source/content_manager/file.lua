@@ -3,6 +3,14 @@ local json = require ("source.libraries.json.json")
 require ("source.libraries.json.jsonc")
 content.file = {}
 
+-- Contains references to all the available content loaders
+local loaders = {
+    tile = content.tile.load,
+    -- tool = content.tool.load,
+    -- script = content.script.load,
+    -- cat = content.cat.load,
+}
+
 
 --- Loads a JSON file from disk and stores its data into a table.
 -- @param filename (string) The name of the JSON file to load
@@ -41,9 +49,9 @@ function content.file.loadContent (dir)
                 local jsonTbl = content.file.loadJSON (filename)
 
                 if jsonTbl ~= nil then
-                    content.file.callLoaders (jsonTbl)
+                    content.file.callLoaders (jsonTbl, filename)
                 else
-                    error ("Error: Invalid JSON file in " .. v)
+                    error (v .. " - Error: Invalid JSON format")
                 end
             end
         end
@@ -53,10 +61,17 @@ end
 
 --- Calls the correct content loaders for a series of JSON objects in a JSON table array.
 -- @param jsonTbl (table) An array of JSON objects
-function content.file.callLoaders (jsonTbl)
+-- @param filename (string) The file containing the JSON array
+function content.file.callLoaders (jsonTbl, filename)
+    filename = filename or ""
+    
     -- Iterates over the objects JSON array
     for _, v in ipairs (jsonTbl) do
-        -- This is where the content loaders take over the loading process
-        content[v.contentType].load (v)
+        if loaders[v.contentType] ~= nil then
+            -- This is where the content loaders take over the loading process
+            loaders[v.contentType] (v, filename)
+        else
+            error (v .. " - Error: Invalid content type")
+        end
     end
 end

@@ -32,6 +32,11 @@ function love.load ()
 
     -- Initializes the map
     map.data.reset ()
+
+    -- Tests content loading
+    print ("TESTING CONTENT LOADING...\n")
+    content.file.loadContent ("test")
+    print ("\nTESTING COMPLETE!")
     
     print ("Setup successful. Load time: " .. string.format ("%.2f", tostring (os.clock ())) .. " seconds")
     print ("Entering the game...")
