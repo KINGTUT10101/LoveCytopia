@@ -6,7 +6,9 @@ content.tile = {
 local data = content.tile._data
 local handlers = content.tile._handlers
 
--- A map containing all the required values in a tile JSOn object
+require ("source.handlers.tile", handlers)
+
+-- A map containing all the required values in a tile JSON object
 local requiredValues = {
     id = true,
     contentType = true,
@@ -23,7 +25,7 @@ function content.tile.load (jsonObj, filename)
     filename = filename or ""
     
     -- Contains all the default values for a tile object
-    local defaultTile = {
+    local newObj = {
         name = filename,
         desc = filename,
         author = "Unknown",
@@ -48,8 +50,24 @@ function content.tile.load (jsonObj, filename)
         load = true,
     }
 
-    -- Data validation
-    
-    -- Adds the object to the data table
-    data[jsonObj.id] = jsonObj
+    -- Overrides the default values
+    for k, v in pairs (jsonObj) do
+        newObj[k] = v
+    end
+
+    -- Checks if the tile object has all the required values
+    for k, _ in pairs (requiredValues) do
+        if newObj[k] == nil then
+            error (filename .. " - Error: Missing required value: " .. k)
+        end
+    end
+
+    -- Validates the tile object using its type handler
+    if handlers[newObj.type] == nil then
+        error (filename .. " - Error: Invalid type: " .. newObj.type)
+    elseif handlers[newObj.type].init (newObj) == false then
+        error (filename .. " - Error: Error with tile type")
+    else
+        data[newObj.id] = newObj -- Adds the object to the data table
+    end
 end
