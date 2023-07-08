@@ -1,21 +1,2 @@
-=====Development=====
-Kingtut 101
-
-=====Graphics=====
-Kingtut 101
-Pineapples Trix
-RockFort
-Folesnaid
-MaroonShaded
-Yusuf8a684
-JustKekman
-THEMAX
-BangBoom
-Panzerkampfwagen 2 ausf
-
-=====Audio=====
-MB22
-sqwdmusic
-
-=====Original Idea=====
-SimplyLiz
+Check out our wiki for an up-to-date list of credits:
+https://github.com/KINGTUT10101/LoveCytopia/wiki/Credits
