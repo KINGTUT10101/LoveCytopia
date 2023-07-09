@@ -62,10 +62,17 @@ end
 -- @param mouseY (number) The y position of the mouse
 -- @return A pair of map coordinates, even if they're invalid
 function map.util.toFlatCoords (mouseX, mouseY)    
-    -- @fixme I think this function is off by half a pixel on both axes, but it's probably not worth fixing
-    
     local mapX = math.floor (mouseY / _TILE_H + (mouseX - _TILE_H) / _TILE_W)
 	local mapY = math.floor (mouseY / _TILE_H - (mouseX - _TILE_H) / _TILE_W)
 
     return mapX, mapY
+end
+
+
+--- Checks if a set of map coordinates are within the limits of the map.
+-- @param mapX (int) The x position of the tile
+-- @param mapY (int) The y position of the tile
+-- @return True if the provided coordinates are within bounds
+function map.util.checkBounds (mapX, mapY)
+    return ((mapX >= 1 and mapX <= map.data._props.width) and (mapY >= 1 and mapY <= map.data._props.height))
 end

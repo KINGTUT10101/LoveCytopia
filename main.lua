@@ -1,11 +1,11 @@
 -- Loads the libraries
 require ("source.libraries.requireExt")
-local map = require ("source.map_manager")
 local content = require ("source.content_manager")
+local map = require ("source.map_manager")
 local camera = require ("source.camera")
 
 -- Declares / initializes the global variables
-
+print (love.getVersion ())
 
 
 -- Declares / initializes the local variables
@@ -34,9 +34,7 @@ function love.load ()
     map.data.reset ()
 
     -- Tests content loading
-    print ("TESTING CONTENT LOADING...\n")
     content.file.loadContent ("test")
-    print ("\nTESTING COMPLETE!")
     
     print ("Setup successful. Load time: " .. string.format ("%.2f", tostring (os.clock ())) .. " seconds")
     print ("Entering the game...")
