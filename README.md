@@ -13,6 +13,8 @@ Cytopia is a free, open source retro pixel-art city building game with a big foc
 
 If you have questions or if you want to join the project, visit the [project's Discord server](https://discord.gg/MG3tgYV6ce).
 
+![image](https://github.com/KINGTUT10101/LoveCytopia/assets/45105509/5745d471-78fd-4c21-b597-c47c381b424b)
+
 ### Supported Platforms
 
 Windows is officially supported, but any platform that can run LOVE2D should support the game too.
