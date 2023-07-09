@@ -1,0 +1,17 @@
+[
+    {
+        "contentType": "tile",
+        "id": "1x1_TestTile",
+        "name": "Test Tile",
+        "desc": "The first tile added to Love, Cytopia. It was designed to test the content loader and type handlers.",
+        "author": "Kingtut 101",
+        "type": "tile",
+        "w": 1,
+        "h": 1,
+        "frames": [
+            {
+                "file": "tileImage.png"
+            }
+        ]
+    }
+]

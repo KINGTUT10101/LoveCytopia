@@ -10,10 +10,10 @@ require = function (filename, ...)
 
         -- Iterate over package.loaders and attempt to find a proper module loader
         for i = 1, #package.loaders do
-            local result = package.loaders[i] (filename)
+            local require = package.loaders[i] (filename)
 
-            if type (result) == "function" then
-                outputs = {result (filename, ...)} -- Loads the file and stores the outputs
+            if type (require) == "function" then
+                outputs = {require (filename, ...)} -- Loads the file and stores the outputs
                 success = true
                 break
             end 

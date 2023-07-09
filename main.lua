@@ -1,15 +1,21 @@
 -- Loads the libraries
+require ("source.libraries.requireExt")
+local content = require ("source.content_manager")
+local map = require ("source.map_manager")
+local camera = require ("source.camera")
+
+-- Declares / initializes the global variables
+print (love.getVersion ())
 
 
 -- Declares / initializes the local variables
-local Tiledefs = require ("source.classes.tiledefs")
-local Map = require ("source.classes.map")
+local gameInfo = {
+    version = "0.1"
+}
 
-local test = require ("source.classes.tiles.filler")
-
-
--- Declares / initializes the global variables
-
+local mouseX, mouseY
+local mouseXt, mouseYt
+local mapX, mapY
 
 
 -- Defines the functions
@@ -17,55 +23,70 @@ local test = require ("source.classes.tiles.filler")
 
 
 function love.load ()
+    print ("Love, Cytopia v" .. gameInfo.version)
+    print ("Using LOVE2D v" .. love.getVersion ())
     
+    -- Sets the image filter and line style so the graphics aren't blurry
+    love.graphics.setDefaultFilter ("nearest", "nearest")
+    love.graphics.setLineStyle ("smooth")
+
+    -- Initializes the map
+    map.data.reset ()
+
+    -- Tests content loading
+    content.file.loadContent ("test")
     
-    Map.clear (32)
+    print ("Setup successful. Load time: " .. string.format ("%.2f", tostring (os.clock ())) .. " seconds")
+    print ("Entering the game...")
 end
 
 
 function love.update (dt)
-    
+    mouseX, mouseY = love.mouse.getPosition ()
+    mouseXt, mouseYt = camera.update (dt, mouseX, mouseY)
+    mapX, mapY = map.util.toMapCoords (mouseXt, mouseYt)
 end
 
--- TODO: TILE AT HIGHER ELEVATIONS SHOULD BE SLIGHTLY LIGHTER THAN TILES AT LOWER ELEVATIONS
+
 function love.draw()
-    love.graphics.push ()
-        --love.graphics.scale (5, 5)
-        Map.draw ()
-    love.graphics.pop ()
+    map.draw.render ()
 
-    local temp1, temp2 = Map.toMapCoords (love.mouse.getPosition ())
-    love.graphics.print ("Map: " .. temp1 .. ", " .. temp2, 500, 25)
+    -- Renders backgrounds for GUI items
+    love.graphics.setColor(0.25, 0.25, 0.25, 0.85)
+    love.graphics.rectangle ("fill", 0, 0, 125, 125)
+    love.graphics.rectangle ("fill", 690, 0, 125, 100)
 
-    temp1, temp2 = Map.toRealCoords (love.mouse.getPosition ())
-    love.graphics.print ("Flat: " .. math.floor (temp1) .. ", " .. math.floor (temp2), 500, 50)
+    -- Shows the FPS
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print ("FPS: " .. love.timer.getFPS(), 700, 20)
 
-    temp1 = math.floor (temp1 * 10) / 10
-    temp2 = math.floor (temp2 * 10) / 10
-    love.graphics.print ("Real: " .. temp1 .. ", " .. temp2, 500, 75)
+    -- Shows the tile coordinates
+    local tileX, tileY = map.util.toMapCoords (mouseXt, mouseYt)
+    love.graphics.print ("Map: " .. tileX .. ", " .. tileY, 700, 40)
+    tileX, tileY = map.util.toFlatCoords (mouseXt, mouseYt)
+    love.graphics.print ("Flat: " .. tileX .. ", " .. tileY, 700, 60)
 
-    temp1, temp2 = love.mouse.getPosition ()
-    love.graphics.print ("Mouse: " .. temp1 .. ", " .. temp2, 500, 100)
+    -- Shows the mouse info
+    love.graphics.print ("Real: " .. mouseX .. ", " .. mouseY, 10, 20)
+    love.graphics.print ("Transl: " .. math.floor (mouseXt) .. ", " .. math.floor (mouseYt), 10, 40)
+
+    -- Shows the camera info
+    love.graphics.print ("Cam: " .. math.floor (camera.x) .. ", " .. math.floor (camera.y), 10, 60)
+    love.graphics.print ("Zoom: " .. math.floor (camera.zoom * 100) / 100 .. "x", 10, 80)
 end
 
 
 function love.keypressed (key)
-    
+    if key == "r" then
+        map.data.reset ()
+    end
 end
 
 
-function love.mousepressed( x, y, button, istouch, presses )
-    local mapX, mapY = Map.toMapCoords (love.mouse.getPosition ())
-    
-    if mapX >= 1 and mapY >= 1 then
-        -- Lower tile height when RMB is pressed
-        if button == 2 and Map.grid[mapX][mapY].z > 1 then
-            Map.grid[mapX][mapY].z = Map.grid[mapX][mapY].z - 1
-        end
-        
-        -- Raises tile height when LMB is pressed
-        if button == 1 and Map.grid[mapX][mapY].z < Map.height then
-            Map.grid[mapX][mapY].z = Map.grid[mapX][mapY].z + 1
-        end
+function love.mousepressed(x, y, button, istouch, presses)
+    if button == 1 then
+        map.act.raise (mapX, mapY, 1)
+    elseif button == 2 then
+        map.act.raise (mapX, mapY, -1)
     end
 end
