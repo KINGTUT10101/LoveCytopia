@@ -5,12 +5,12 @@ local map = require ("source.map_manager")
 local camera = require ("source.camera")
 
 -- Declares / initializes the global variables
-print (love.getVersion ())
+
 
 
 -- Declares / initializes the local variables
 local gameInfo = {
-    version = "0.1"
+    version = "0.2"
 }
 
 local mouseX, mouseY
@@ -23,7 +23,7 @@ local mapX, mapY
 
 
 function love.load ()
-    print ("Love, Cytopia v" .. gameInfo.version)
+    print ("Love, Cytopia v" .. gameInfo.version .. ": Unknown Title")
     print ("Using LOVE2D v" .. love.getVersion ())
     
     -- Sets the image filter and line style so the graphics aren't blurry
