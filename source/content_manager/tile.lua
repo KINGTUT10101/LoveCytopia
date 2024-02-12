@@ -3,10 +3,8 @@ content.tile = {
     _data = {}, -- Contains the tiles' data
     _handlers = {}, -- Contains all the tile type handlers
 }
-local data = content.tile._data
-local handlers = content.tile._handlers
 
-require ("source.handlers.tile", handlers)
+require ("source.handlers.tile", content.tile._handlers)
 
 -- A map containing all the required values in a tile JSON object
 local requiredValues = {
@@ -63,11 +61,11 @@ function content.tile.load (jsonObj, filename)
     end
 
     -- Validates the tile object using its type handler
-    if handlers[newObj.type] == nil then
+    if content.tile._handlers[newObj.type] == nil then
         error (filename .. " - Error: Invalid type: " .. newObj.type)
-    elseif handlers[newObj.type].init (newObj) == false then
+    elseif content.tile._handlers[newObj.type].init (newObj) == false then
         error (filename .. " - Error: Error with tile type")
     else
-        data[newObj.id] = newObj -- Adds the object to the data table
+        content.tile._data[newObj.id] = newObj -- Adds the object to the data table
     end
 end

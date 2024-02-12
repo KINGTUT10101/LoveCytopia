@@ -27,7 +27,7 @@ function content.file.loadJSON (filename)
 end
 
 
---- Finds all the JSON files in a directory, translates them  calls the appropriate content loaders.
+--- Finds all the JSON files in a directory, translates them, and calls the appropriate content loaders.
 -- Files and folders starting with an underscore will be skipped
 -- @param dir (string) A file directory, aka a path to a folder.
 function content.file.loadContent (dir)
