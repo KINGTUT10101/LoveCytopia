@@ -1,3 +1,0 @@
-local filepath, map = ...
-map.update = {}
-
