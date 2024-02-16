@@ -20,8 +20,10 @@ local mapX, mapY
 
 
 function love.load ()
+    local majorLoveVersion, minorLoveVersion, revisionLoveVersion, codenameLoveVersion = love.getVersion ()
+
     print ("Love, Cytopia v" .. gameInfo.version .. ": Unknown Title")
-    print ("Using LOVE2D v" .. love.getVersion ())
+    print ("Using LOVE2D v" .. majorLoveVersion .. "." .. minorLoveVersion .. ": " .. codenameLoveVersion)
     
     -- Sets the image filter and line style so the graphics aren't blurry
     love.graphics.setDefaultFilter ("nearest", "nearest")
