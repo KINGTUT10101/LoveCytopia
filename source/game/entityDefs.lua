@@ -1,7 +1,7 @@
-local entities = {
+local entityDefs = {
     ["default_ground"] = {
         id = "default_ground",
-        type = "ground",
+        type = "default",
         frames = {
             nil
         },
@@ -11,3 +11,5 @@ local entities = {
         tags = {"ground", "grass"},
     }
 }
+
+return entityDefs

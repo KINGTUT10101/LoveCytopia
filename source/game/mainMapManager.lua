@@ -19,10 +19,12 @@ local mapMan = {
 local entityDefs = require ("source.game.entityDefs")
 local typeHandlers = require ("source.game.typeHandlers", mapMan)
 
-function mapMan:newLayerData (id, frame)
+function mapMan:newLayerData (id, frame, entityDefRef, typeHandlerRef)
     local obj = {
         id = id,
         frame = frame,
+        entityDefRef = entityDefRef,
+        typeHandlerRef = typeHandlerRef,
         data = {},
     }
 
@@ -85,11 +87,6 @@ function mapMan:setMap (mapData)
     self.data = mapData
 end
 
---- Executes a handler function for a specific entity.
-function mapMan:executeHandler (layerData, functionName, ...)
-    return layerData.typeHandlerRef[functionName] (...)
-end
-
 function mapMan:update (dt)
     -- Update the map
 end
@@ -108,6 +105,10 @@ function mapMan:draw ()
                 local screenY = (i + j) * (TILE_H / 2) - tileDataObj.depth * TILE_F
     
                 love.graphics.draw (image, screenX, screenY)
+
+                if self:getLayer (i, j, pos).id == "default_ground" then
+                    love.graphics.rectangle ("fill", screenX + 11, screenY, 10, 10)
+                end
             end
         end
     end
@@ -116,12 +117,10 @@ end
 --- Places an entity at a specified position.
 -- This may fail depending on the tile's type and what already exists at the position
 function mapMan:spawn (x, y, layer, id)
-    local tile = self.getTile (x, y, layer)
-    local layerData = tile.layers:getByPos (layer)
+    local handler = typeHandlers[entityDefs[id].type]
+    local newLayerData = self:newLayerData (id, 1, entityDefs[id], handler)
 
-    if self.executeHandler (layerData, "validatePlacement", x, y, layer, layer.attributesRef) then
-        self.executeHandler (layerData, "place", x, y, layer, layer.attributesRef)
-    end
+    return handler:place (x, y, layer, newLayerData)
 end
 
 function mapMan:delete (x, y, layer)

@@ -78,6 +78,8 @@ end
 function love.keypressed (key)
     if key == "r" then
         mapMan:setMap (mapMan:newMap ())
+    elseif key == "l" then
+        mapMan:spawn (32, 1, 1, "default_ground")
     end
 end
 
