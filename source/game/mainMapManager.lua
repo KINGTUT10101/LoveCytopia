@@ -38,8 +38,6 @@ function mapMan:newTileData (depth)
         layers = KeyedArray:new ()
     }
 
-    obj.layers:insert (1, self:newLayerData ("grass_ground", 1), 1)
-
     return obj
 end
 
@@ -76,6 +74,10 @@ function mapMan:getLayer (x, y, layer)
     return self.data.grid[x][y].layers:getByPos (layer)
 end
 
+function mapMan:getLayerFromTile (tileData, layer)
+    return tileData.layers:getByPos (layer)
+end
+
 --- Generates a blank map, AKA a "default" map data object.
 -- Only generates the map. It does not automatically set it as the current map
 function mapMan:newMap ()
@@ -85,6 +87,16 @@ end
 --- Sets the current map data object.
 function mapMan:setMap (mapData)
     self.data = mapData
+end
+
+function mapMan:resetMap ()
+    local width, height = self.data.width, self.data.height
+
+    for i = 1, width do
+        for j = 1, height do
+            self:spawn (i, j, 1, "grass_ground")
+        end
+    end
 end
 
 function mapMan:update (dt)
@@ -124,9 +136,11 @@ function mapMan:spawn (x, y, layer, id)
 end
 
 function mapMan:delete (x, y, layer)
-    local tile = self.getTile (x, y, layer)
-
-    tile.layers[layer] = nil
+    local tileData = self:getTile (x, y)
+    local layerData = self:getLayerFromTile (tileData, layer)
+    local handler = typeHandlers[entityDefs[layerData.id].type]
+    
+    return handler:delete (x, y, layer, tileData)
 end
 
 --- Swaps the positions of 2 entities.

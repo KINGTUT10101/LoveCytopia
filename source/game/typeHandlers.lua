@@ -27,4 +27,11 @@ function typeHandlers.default:place (x, y, layer, newLayerData)
     return false
 end
 
+function typeHandlers.default:delete (x, y, layer, tileData)
+    
+    local result = tileData.layers:deleteByKey (layer)
+
+    return result
+end
+
 return typeHandlers

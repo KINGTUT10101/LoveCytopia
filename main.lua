@@ -29,6 +29,7 @@ function love.load ()
 
     -- Initializes the map
     mapMan:setMap (mapMan:newMap ())
+    mapMan:resetMap ()
 
     -- Tests content loading
     -- content.file.loadContent ("test")
@@ -77,9 +78,11 @@ end
 
 function love.keypressed (key)
     if key == "r" then
-        mapMan:setMap (mapMan:newMap ())
+        mapMan:resetMap ()
     elseif key == "l" then
         mapMan:spawn (32, 1, 1, "default_ground")
+    elseif key == "p" then
+        mapMan:delete (32, 1, 1)
     end
 end
 
