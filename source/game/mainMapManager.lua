@@ -138,9 +138,15 @@ end
 function mapMan:delete (x, y, layer)
     local tileData = self:getTile (x, y)
     local layerData = self:getLayerFromTile (tileData, layer)
-    local handler = typeHandlers[entityDefs[layerData.id].type]
-    
-    return handler:delete (x, y, layer, tileData)
+
+    -- Check if an entity exists at the layer
+    if layerData ~= nil then
+        local handler = typeHandlers[entityDefs[layerData.id].type]
+        
+        return handler:delete (x, y, layer, tileData)
+    else
+        return true
+    end
 end
 
 --- Swaps the positions of 2 entities.
